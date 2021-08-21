@@ -4,6 +4,9 @@
 <!-- ![](https://github.com/taxeric/PokeCompose/blob/main/poke-compose_1.jpg) -->
 <img src="https://github.com/taxeric/PokeCompose/blob/main/composite.png">
 
+## 下载体验
+[点击下载](https://github.com/taxeric/PokeCompose/raw/main/app/release/app-release.apk)
+
 ## 引用库
 - [JetPack Compose](https://developer.android.com/jetpack/compose)：声明式UI框架
 - Retrofit2 & OkHttp3：网络请求库
