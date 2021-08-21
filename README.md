@@ -1,5 +1,5 @@
 # PokeCompose 🗡
-初步上手JetPack Compose：宝可梦信息展示
+初步上手JetPack Compose：宝可梦图鉴
 
 <!-- ![](https://github.com/taxeric/PokeCompose/blob/main/poke-compose_1.jpg) -->
 <img src="https://github.com/taxeric/PokeCompose/blob/main/composite.png">
@@ -21,11 +21,14 @@ This is a full RESTful API linked to an extensive database detailing everything 
 
 > We've covered everything from Pokémon to Berry Flavors.
 
+## PS
+图片加载需要翻墙
+
 ## TODO
 - 适配黑夜模式
 - Room存储基本信息
 - ...
 
 ## 鸣谢
-[PokemonGo](https://github.com/hi-dhl/PokemonGo)
+[PokemonGo](https://github.com/hi-dhl/PokemonGo)  
 [Pokedex](https://github.com/skydoves/Pokedex)
