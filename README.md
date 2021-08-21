@@ -1,7 +1,11 @@
 # PokeCompose 🗡
 初步上手JetPack Compose：宝可梦信息展示
 
-![](https://github.com/taxeric/PokeCompose/blob/main/poke-compose_1.jpg)
+<!-- ![](https://github.com/taxeric/PokeCompose/blob/main/poke-compose_1.jpg) -->
+<img src="https://github.com/taxeric/PokeCompose/blob/main/poke-compose_1.jpg" width="200">
+<img src="https://github.com/taxeric/PokeCompose/blob/main/poke-compose_2.jpg" width="200">
+<img src="https://github.com/taxeric/PokeCompose/blob/main/poke-compose_3.jpg" width="200">
+<img src="https://github.com/taxeric/PokeCompose/blob/main/poke-compose_4.jpg" width="200">
 
 ## 引用库
 - [JetPack Compose](https://developer.android.com/jetpack/compose)：声明式UI框架

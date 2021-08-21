@@ -1,12 +1,13 @@
 package com.lanier.foxcomposepractice.ui.theme.screen
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +30,7 @@ import com.lanier.foxcomposepractice.base.LocalConstant
 import com.lanier.foxcomposepractice.entity.*
 import com.lanier.foxcomposepractice.model.PokemonInfoModel
 import com.lanier.foxcomposepractice.utils.PokemonUtil
-
+import kotlinx.coroutines.delay
 /**
  * Author: 芒硝
  * Email : 1248389474@qq.com
@@ -157,7 +158,10 @@ fun ShowInfo(entity: PokemonInfoEntity){
                     color = Color.White,
                     modifier = Modifier.padding(50.dp, 0.dp, 50.dp, 0.dp)
                 )
+                Spacer(modifier = Modifier.height(10.dp))
             }
+            AttrsItem(value = de.base_happiness, color = Color(211, 147, 241), text = "亲密度")
+            AttrsItem(value = de.capture_rate, color = Color(129, 179, 253), text = "捕获率")
         }
     }
 }
@@ -203,6 +207,44 @@ fun AttachWH(base: PokemonBaseInfoEntity?){
                 }
             }
             Spacer(modifier = Modifier.height(10.dp))
+        }
+    }
+}
+
+@Composable
+fun AttrsItem(value: Int, color: Color, text: String){
+    val stateValue = animateFloatAsState(
+        targetValue = (value / 1000.0).toFloat(),
+        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec)
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(10.dp),
+    ) {
+        Text(
+            text = text, color = Color.LightGray,
+            modifier = Modifier
+                .weight(0.3f)
+                .height(25.dp)
+                .padding(25.dp, 0.dp, 0.dp, 0.dp)
+        )
+        Box(modifier = Modifier
+            .weight(0.7f)
+        ){
+            LinearProgressIndicator(
+                progress = stateValue.value, color = color,
+                backgroundColor = Color.LightGray,
+                modifier = Modifier
+                    .height(25.dp)
+                    .clip(RoundedCornerShape(20.dp))
+            )
+            Text(
+                text = "${value / 10.0}/100",
+                color = Color.White,
+                modifier = Modifier
+                    .padding(10.dp, 0.dp, 0.dp, 0.dp)
+                    .align(Alignment.CenterStart),
+                fontSize = 12.sp
+            )
         }
     }
 }

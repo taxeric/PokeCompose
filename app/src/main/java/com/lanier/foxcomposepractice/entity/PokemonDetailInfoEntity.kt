@@ -7,8 +7,8 @@ package com.lanier.foxcomposepractice.entity
  * Desc  : detail entity
  */
 data class PokemonDetailInfoEntity(
-    val base_happiness: Int = 0,//基础亲密度
-    val capture_rate: Int = 0,//捕获概率
+    val base_happiness: Int = 0,//基础亲密度√
+    val capture_rate: Int = 0,//捕获概率√
     val color: PokemonColor ?= null,//颜色
     val egg_groups: List<EggGroup> ?= null,//蛋组
     val evolution_chain: EvolutionChain ?= null,
