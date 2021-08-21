@@ -1,6 +1,8 @@
 # PokeCompose 🗡
 初步上手JetPack Compose：宝可梦信息展示
 
+[](https://github.com/taxeric/PokeCompose/poke-compose_1.jpg)
+
 ## 引用库
 - [JetPack Compose](https://developer.android.com/jetpack/compose)：声明式UI框架
 - Retrofit2 & OkHttp3：网络请求库
