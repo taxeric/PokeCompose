@@ -142,23 +142,30 @@ fun ShowInfo(entity: PokemonInfoEntity){
             val name = de.names?.filter { it.language.name == LocalConstant.LANGUAGE }
             val genus = de.genera?.filter { it.language.name == LocalConstant.LANGUAGE }
             val desc = de.flavor_text_entries?.filter { it.language.name == LocalConstant.LANGUAGE }
-            name?.get(0)?.let {
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(text = it.name, color = Color.White, fontSize = 25.sp)
-                Spacer(modifier = Modifier.height(5.dp))
+            if (!name.isNullOrEmpty()) {
+                name.get(0).let {
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(text = it.name, color = Color.White, fontSize = 25.sp)
+                    Spacer(modifier = Modifier.height(5.dp))
+                }
             }
-            genus?.get(0)?.let {
-                Text(text = it.genus, color = Color.LightGray)
-                Spacer(modifier = Modifier.height(10.dp))
+            if (!genus.isNullOrEmpty()) {
+                genus.get(0).let {
+                    Text(text = it.genus, color = Color.LightGray)
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
             }
             AttachTypeView(types = base?.types)
             AttachWH(base)
-            desc?.get(0)?.let {
-                Text(text = it.flavor_text.replace("\n", ""),
-                    color = Color.White,
-                    modifier = Modifier.padding(50.dp, 0.dp, 50.dp, 0.dp)
-                )
-                Spacer(modifier = Modifier.height(10.dp))
+            if (!desc.isNullOrEmpty()) {
+                desc.get(0).let {
+                    Text(
+                        text = it.flavor_text.replace("\n", ""),
+                        color = Color.White,
+                        modifier = Modifier.padding(50.dp, 0.dp, 50.dp, 0.dp)
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
             }
             AttrsItem(value = de.base_happiness, color = Color(211, 147, 241), text = "亲密度")
             AttrsItem(value = de.capture_rate, color = Color(129, 179, 253), text = "捕获率")
