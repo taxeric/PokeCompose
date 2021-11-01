@@ -5,7 +5,7 @@
 <img src="https://github.com/taxeric/PokeCompose/blob/main/composite.png">
 
 ## 下载体验
-[点击下载](https://github.com/taxeric/PokeCompose/raw/main/app/release/app-release.apk)
+[点击下载](https://github.com/taxeric/PokeCompose/raw/main/app/release/PokeCompose.apk)
 
 ## 引用库
 - [JetPack Compose](https://developer.android.com/jetpack/compose)：声明式UI框架
