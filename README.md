@@ -27,6 +27,9 @@ This is a full RESTful API linked to an extensive database detailing everything 
 ## PS
 图片加载需要翻墙
 
+## 更新
+- 修复当列表加载到200+时偶尔出现宝可梦信息为null导致crash
+
 ## TODO
 - 适配黑夜模式
 - Room存储基本信息
