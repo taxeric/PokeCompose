@@ -36,6 +36,9 @@ This is a full RESTful API linked to an extensive database detailing everything 
 - Room存储基本信息
 - ...
 
+## 推荐阅读
+[Kotlin的IO操作](https://www.tutorialkart.com/kotlin/write-content-to-file-in-kotlin/)
+
 ## 鸣谢
 [PokemonGo](https://github.com/hi-dhl/PokemonGo)  
 [Pokedex](https://github.com/skydoves/Pokedex)
