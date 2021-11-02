@@ -1,5 +1,5 @@
 # PokeCompose 🗡
-初步上手JetPack Compose：宝可梦图鉴
+初步上手Jetpack Compose：宝可梦图鉴
 
 <!-- ![](https://github.com/taxeric/PokeCompose/blob/main/poke-compose_1.jpg) -->
 <img src="https://github.com/taxeric/PokeCompose/blob/main/composite.png">
@@ -38,6 +38,7 @@ This is a full RESTful API linked to an extensive database detailing everything 
 
 ## 推荐阅读
 [Kotlin的IO操作](https://www.tutorialkart.com/kotlin/write-content-to-file-in-kotlin/)
+[Jetpack Compose Accompanist](https://google.github.io/accompanist/)
 
 ## 鸣谢
 [PokemonGo](https://github.com/hi-dhl/PokemonGo)  
