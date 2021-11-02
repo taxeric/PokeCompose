@@ -8,7 +8,7 @@
 [点击下载](https://github.com/taxeric/PokeCompose/raw/main/app/release/PokeCompose.apk)
 
 ## 引用库
-- [JetPack Compose](https://developer.android.com/jetpack/compose)：声明式UI框架
+- [Jetpack Compose](https://developer.android.com/jetpack/compose)：声明式UI框架
 - Retrofit2 & OkHttp3：网络请求库
 - [Coil](https://github.com/coil-kt/coil/blob/master/README-zh.md)：基于Kt的图片加载库
 - Paging3：列表加载库
