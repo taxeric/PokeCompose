@@ -3,7 +3,8 @@ package com.lanier.foxcomposepractice.repo
 import com.lanier.foxcomposepractice.entity.PokemonListEntity
 import com.lanier.foxcomposepractice.utils.FileUtil
 import com.lanier.foxcomposepractice.utils.RetrofitService
-import com.lanier.libbase.utils.LogUtil
+import com.lanier.libbase.utils.logE
+import com.lanier.libbase.utils.logI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -26,12 +27,12 @@ class PokemonListRepo {
                 val index = offset * 20
                 val entity = service.fetchPokemonList(offset = index)
                 if (FileUtil.write("${FileUtil.prefix}$offset.json", entity)) {
-                    LogUtil.i("save success")
+                    "save success".logI()
                 }
                 entity
             }
         }catch (e: Exception){
-            LogUtil.e("failed: ${e.message}")
+            "failed: ${e.message}".logE()
             null
         }
     }

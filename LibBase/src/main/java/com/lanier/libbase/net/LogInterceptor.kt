@@ -1,6 +1,6 @@
 package com.lanier.libbase.net
 
-import com.lanier.libbase.utils.LogUtil
+import com.lanier.libbase.utils.logE
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.ResponseBody
@@ -23,22 +23,22 @@ class LogInterceptor: Interceptor {
         //结果数据
         val content = response.body!!.string()
 
-        LogUtil.e("Request Start--------------------------")
+        "Request Start--------------------------".logE()
 
-        LogUtil.e("请求地址: ${request.url}")
+        "请求地址: ${request.url}".logE()
         if (post == request.method) {
             if (request.body != null) {
-                LogUtil.e("请求类型: ${request.method}, ContentLength = (${request.body!!.contentLength()}-byte body)")
+                "请求类型: ${request.method}, ContentLength = (${request.body!!.contentLength()}-byte body)".logE()
             }
         } else {
-            LogUtil.e("请求类型 = ${request.method}")
+            "请求类型 = ${request.method}".logE()
         }
 
         //打印请求头
         val heards = request.headers.names()
         for (names in heards) {
             for (name in request.headers(names)) {
-                LogUtil.e("请 求 头: $names = $name")
+                "请 求 头: $names = $name".logE()
             }
         }
 
@@ -53,12 +53,12 @@ class LogInterceptor: Interceptor {
                 if (contentType != null) {
                     charset = contentType.charset(charset)
                 }
-                LogUtil.e("请求参数: ${buffer.readString(charset!!)}")
+                "请求参数: ${buffer.readString(charset!!)}".logE()
             }
-            LogUtil.e("请求响应  = ${response.code} , ContentLength = (${response.body!!.contentLength()}-byte body)")
+            "请求响应  = ${response.code} , ContentLength = (${response.body!!.contentLength()}-byte body)".logE()
         }
-        LogUtil.e("响应结果: $content")
-        LogUtil.e("--------------------Request End: ")
+        "响应结果: $content".logE()
+        "--------------------Request End: ".logE()
         return response.newBuilder()
             .body(ResponseBody.create(mediaType, content))
             .build()

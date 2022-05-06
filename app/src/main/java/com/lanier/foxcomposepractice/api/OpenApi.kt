@@ -56,4 +56,12 @@ interface OpenApi {
     suspend fun describeInfo(
         @Path("path") baseName_or_id: String
     ): PokemonBaseInfoEntity
+
+    /**
+     * 特性
+     */
+    @GET("ability/{path}")
+    suspend fun getPokemonAbility(
+        @Path("path") id_or_name: String
+    )
 }

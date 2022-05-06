@@ -1,7 +1,7 @@
 package com.lanier.foxcomposepractice.repo
 
 import com.lanier.foxcomposepractice.utils.RetrofitService
-import com.lanier.libbase.utils.LogUtil
+import com.lanier.libbase.utils.logE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -19,7 +19,7 @@ class PokemonInfoRepo {
         try {
             service.searchPokemonDetailInfo(id)
         }catch (e: Exception){
-            LogUtil.e("info data failed: ${e.message}")
+            "info data failed: ${e.message}".logE()
             null
         }
     }
@@ -28,7 +28,7 @@ class PokemonInfoRepo {
         try {
             service.describeInfo(id)
         } catch (e: Exception){
-            LogUtil.e("base data failed: ${e.message}")
+            "base data failed: ${e.message}".logE()
             null
         }
     }

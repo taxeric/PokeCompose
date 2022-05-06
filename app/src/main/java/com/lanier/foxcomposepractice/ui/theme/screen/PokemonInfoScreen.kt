@@ -1,7 +1,6 @@
 package com.lanier.foxcomposepractice.ui.theme.screen
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,16 +10,21 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.buildSpannedString
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.statusBarsHeight
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
@@ -30,7 +34,7 @@ import com.lanier.foxcomposepractice.base.LocalConstant
 import com.lanier.foxcomposepractice.entity.*
 import com.lanier.foxcomposepractice.model.PokemonInfoModel
 import com.lanier.foxcomposepractice.utils.PokemonUtil
-import kotlinx.coroutines.delay
+
 /**
  * Author: 芒硝
  * Email : 1248389474@qq.com
@@ -85,7 +89,7 @@ fun MainInfo(controller: NavController, id: String, viewModel: PokemonInfoModel)
             LoadFinish(
                 controller = controller,
                 id = id,
-                state = state,
+                pokemon = state,
                 backgroundColor = backgroundColor
             )
         }
@@ -93,9 +97,30 @@ fun MainInfo(controller: NavController, id: String, viewModel: PokemonInfoModel)
 }
 
 @Composable
-private fun LoadFinish(controller: NavController, id: String, state: PokemonInfoEntity, backgroundColor: Color){
+private fun LoadFinish(controller: NavController, id: String, pokemon: PokemonInfoEntity, backgroundColor: Color){
     val painter = rememberImagePainter(data = LocalConstant.getOfficialForeUrl(id))
     val backPainter = painterResource(id = R.drawable.ic_baseline_arrow_back)
+    val pokemonDetail = pokemon.detail
+    val pokemonBase = pokemon.base
+
+    var pokemonName = ""
+    var genus = ""
+    var introduce = ""
+    pokemonDetail?.run{
+        val pokemonNames = this.names?.filter { it.language.name == LocalConstant.LANGUAGE }
+        if (!pokemonNames.isNullOrEmpty()) {
+            pokemonName = pokemonNames[0].name
+        }
+        val genusTypes = this.genera?.filter { it.language.name == LocalConstant.LANGUAGE }
+        if (!genusTypes.isNullOrEmpty()) {
+            genus = genusTypes[0].genus
+        }
+        val desc = this.flavor_text_entries?.filter { it.language.name == LocalConstant.LANGUAGE }
+        if (!desc.isNullOrEmpty()){
+            introduce = desc[0].flavor_text
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -106,30 +131,59 @@ private fun LoadFinish(controller: NavController, id: String, state: PokemonInfo
             .fillMaxWidth()
             .statusBarsHeight()
             .background(backgroundColor)) { }
-        Box(modifier = Modifier.fillMaxWidth()) {
-            Image(painter = painter, contentDescription = "", Modifier
-                .clip(shape = RoundedCornerShape(0, 0, 30, 30))
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .clip(shape = RoundedCornerShape(0, 0, 30, 30))
+            .background(backgroundColor)
+        ) {
+            Row(modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
-                .background(backgroundColor)
-            )
-            Text(text = when (id.length){
-                1 -> "#00$id"
-                2 -> "#0$id"
-                else -> "#$id"
-            }, fontSize = 20.sp, color = Color.White,
-                modifier = Modifier
-                    .padding(0.dp, 10.dp, 20.dp, 0.dp)
-                    .align(Alignment.TopEnd)
-            )
-            Image(painter = backPainter, contentDescription = "",
-                modifier = Modifier
-                    .clickable { controller.popBackStack() }
-                    .align(Alignment.TopStart)
-                    .padding(15.dp)
-            )
+                .wrapContentHeight()) {
+                Image(painter = backPainter, contentDescription = "",
+                    modifier = Modifier
+                        .clickable { controller.popBackStack() }
+                        .padding(15.dp)
+                        .weight(0.1f)
+                )
+                Spacer(modifier = Modifier.weight(0.7f))
+                Text(text = when (id.length){
+                    1 -> "#00$id"
+                    2 -> "#0$id"
+                    else -> "#$id"
+                }, fontSize = 20.sp, color = Color.White,
+                    modifier = Modifier
+                        .padding(0.dp, 10.dp, 20.dp, 0.dp)
+                        .weight(0.2f)
+                )
+            }
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Image(painter = painter, contentDescription = "", Modifier
+                    .width(100.dp)
+                    .height(100.dp)
+                    .align(Alignment.CenterVertically)
+                    .weight(0.3f)
+                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(0.7f)) {
+                    val spStr = AnnotatedString.Builder(pokemonName).apply {
+                        pushStyle(
+                            SpanStyle(
+                                color = Color.LightGray,
+                                fontSize = 14.sp
+                            )
+                        )
+                        append(" $genus")
+                        pop()
+                    }.toAnnotatedString()
+                    Text(text = spStr, color = Color.White, fontSize = 18.sp, modifier = Modifier.wrapContentWidth())
+                    Spacer(modifier = Modifier.height(5.dp))
+                    AttachTypeView(types = pokemonBase?.types)
+                    AttachWH(pokemonBase)
+                    Text(text = introduce.replace("\n", ""), color = Color.LightGray, maxLines = 3, modifier = Modifier.fillMaxWidth().padding(10.dp), textAlign = TextAlign.Start)
+                }
+            }
+
         }
-        ShowInfo(entity = state)
+//        ShowInfo(entity = pokemon)
     }
 }
 
@@ -143,14 +197,14 @@ fun ShowInfo(entity: PokemonInfoEntity){
             val genus = de.genera?.filter { it.language.name == LocalConstant.LANGUAGE }
             val desc = de.flavor_text_entries?.filter { it.language.name == LocalConstant.LANGUAGE }
             if (!name.isNullOrEmpty()) {
-                name.get(0).let {
+                name[0].let {
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(text = it.name, color = Color.White, fontSize = 25.sp)
                     Spacer(modifier = Modifier.height(5.dp))
                 }
             }
             if (!genus.isNullOrEmpty()) {
-                genus.get(0).let {
+                genus[0].let {
                     Text(text = it.genus, color = Color.LightGray)
                     Spacer(modifier = Modifier.height(10.dp))
                 }
@@ -158,7 +212,7 @@ fun ShowInfo(entity: PokemonInfoEntity){
             AttachTypeView(types = base?.types)
             AttachWH(base)
             if (!desc.isNullOrEmpty()) {
-                desc.get(0).let {
+                desc[0].let {
                     Text(
                         text = it.flavor_text.replace("\n", ""),
                         color = Color.White,
@@ -168,7 +222,7 @@ fun ShowInfo(entity: PokemonInfoEntity){
                 }
             }
             AttrsItem(value = de.base_happiness, color = Color(211, 147, 241), text = "亲密度")
-            AttrsItem(value = de.capture_rate, color = Color(129, 179, 253), text = "捕获率")
+            AttrsItem(value = de.capture_rate * 10, color = Color(129, 179, 253), text = "捕获率")
         }
     }
 }
@@ -194,7 +248,6 @@ fun AttachTypeView(types: List<Type>?){
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }
@@ -205,15 +258,14 @@ fun AttachWH(base: PokemonBaseInfoEntity?){
         Column {
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "${it.weight / 10.0} KG", color = Color.White, fontSize = 22.sp)
+                    Text(text = "${it.weight / 10.0} KG", color = Color.White, fontSize = 19.sp)
                     Text(text = "Weight", color = Color.LightGray)
                 }
                 Column(modifier = Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "${it.height / 10.0} M", color = Color.White, fontSize = 22.sp)
+                    Text(text = "${it.height / 10.0} M", color = Color.White, fontSize = 17.sp)
                     Text(text = "Height", color = Color.LightGray)
                 }
             }
-            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 }

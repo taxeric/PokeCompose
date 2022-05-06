@@ -1,7 +1,7 @@
 package com.lanier.foxcomposepractice.utils
 
 import com.google.gson.Gson
-import com.lanier.libbase.utils.LogUtil
+import com.lanier.libbase.utils.logE
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -39,7 +39,7 @@ object FileUtil {
             reader.close()
             bufferedReader.close()
         } catch (e: Exception){
-            LogUtil.e("read failed: ${e.message}")
+            "read failed: ${e.message}".logE()
         }
         return string
     }
@@ -54,7 +54,7 @@ object FileUtil {
             File(path + fileName).writeText(value)
             return true
         } catch (e: Exception){
-            LogUtil.e("write failed: ${e.message}")
+            "write failed: ${e.message}".logE()
         }
         return false
     }
